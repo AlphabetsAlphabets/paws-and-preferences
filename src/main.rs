@@ -3,8 +3,7 @@ mod components;
 mod routes;
 
 use dioxus::prelude::*;
-
-use crate::routes::Route;
+use routes::Route;
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 
