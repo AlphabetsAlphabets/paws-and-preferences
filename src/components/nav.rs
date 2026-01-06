@@ -7,11 +7,9 @@ pub fn NavBar() -> Element {
     rsx! {
         div {
             id: "title",
-            Link { to: Route::CatView,
-                h1 {"Cold Cats"}
-            }
-            Link { to: Route::Favorites,
-                id: "heart", "♥️"
+            Link {
+                to: Route::CatView,
+                h1 { "Cold Cats ♥️" }
             }
         }
         Outlet::<Route> {}
