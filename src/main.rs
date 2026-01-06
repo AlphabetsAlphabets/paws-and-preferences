@@ -18,3 +18,9 @@ fn App() -> Element {
 fn main() {
     dioxus::launch(App);
 }
+
+// Next thing to do
+// 0. Remove all the code in the `backend` part.
+// 1. Add a list or vector to keep track of seen cats.
+// 2. Keep track of which cats were liked and disliked.
+// 3. Show a summary of which cats were liked and disliked.
