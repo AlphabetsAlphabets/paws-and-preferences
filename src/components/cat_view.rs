@@ -33,8 +33,17 @@ fn Summary() -> Element {
     let history = (*CAT_HISTORY.read()).clone();
     let history = history.0;
 
-    let likes: Vec<_> = history.iter().map(|entry| entry.0.clone()).collect();
-    let dislikes: Vec<_> = history.iter().map(|entry| entry.0.clone()).collect();
+    let likes: Vec<_> = history
+        .iter()
+        .filter(|entry| *entry.1)
+        .map(|entry| entry.0.clone())
+        .collect();
+
+    let dislikes: Vec<_> = history
+        .iter()
+        .filter(|entry| !*entry.1)
+        .map(|entry| entry.0.clone())
+        .collect();
 
     rsx! {
         h1 { "Likes "}
