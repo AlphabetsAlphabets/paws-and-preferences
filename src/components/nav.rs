@@ -6,6 +6,7 @@ use crate::routes::Route;
 pub fn NavBar() -> Element {
     rsx! {
         div {
+            class: "flex items-center justify-center text-5xl mb-10",
             id: "title",
             Link {
                 to: Route::CatView,

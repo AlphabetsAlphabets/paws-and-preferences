@@ -21,8 +21,14 @@ pub fn CatView() -> Element {
         }
     } else {
         rsx! {
-            CatImage { image: image }
-            LikeDislike { image: image }
+            div {
+                class: "flex items-center justify-center mb-5",
+                CatImage { image: image }
+            }
+            div {
+                class: "flex items-center justify-center",
+                LikeDislike { image: image }
+            }
         }
     }
 }
@@ -46,33 +52,33 @@ fn Summary() -> Element {
         .collect();
 
     rsx! {
-        h1 { "Likes "}
-        for like in likes {
-            img {
-                src: like
-            }
-        },
-        h1 { "Dislikes "}
-        for dislike in dislikes {
-            img {
-                src: dislike
+        div {
+            class: "grid grid-cols-2",
+            div {
+                class: "flex flex-col items-center text-center",
+                h1 { class: "text-5xl", "Likes"},
+                for like in likes {
+                    img {
+                        class: "w-[500px] h-[500px] object-contain p-5",
+                        id: "catimage",
+                        src: like
+                    }
+                },
+            },
+            div {
+                class: "flex flex-col items-center text-center",
+                h1 { class: "text-5xl", "Dislikes "}
+                for dislike in dislikes {
+                    img {
+                        class: "w-[500px] h-[500px] object-contain p-5",
+                        id: "catimage",
+                        src: dislike
+                    }
+                }
+
             }
         }
     }
-
-    // rsx! {
-    //     table {
-    //         tr {
-    //             th { "Likes" }
-    //             th { "Dislikes" }
-    //         }
-    //         tr {
-    //             img {
-    //                 src: "hi"
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 fn track_cats(url: String, like: bool) {
@@ -90,9 +96,8 @@ fn track_cats(url: String, like: bool) {
 fn CatImage(image: Resource<String>) -> Element {
     rsx! {
         div {
-            id: "catview",
             img {
-                id: "catimage",
+                class: "w-[500px] h-[500px] object-contain",
                 src: image.cloned().unwrap_or_default()
             }
         }
@@ -103,27 +108,24 @@ fn CatImage(image: Resource<String>) -> Element {
 #[component]
 fn LikeDislike(image: Resource<String>) -> Element {
     rsx! {
-        div {
-            id: "buttons",
-            button {
-                onclick: move |_| {
-                    track_cats(image.cloned().unwrap_or_default(), false);
-                    image.restart()
-                },
-                id: "dislike", "dislike"
+        button {
+            class: "mr-4 hover:bg-red-500 p-5",
+            onclick: move |_| {
+                track_cats(image.cloned().unwrap_or_default(), false);
+                image.restart()
             },
-            button {
-                onclick: move |_| async move {
-                    let img_src = image.cloned().unwrap_or_default();
-                    if let Ok(_) = backend::save_cat(img_src.clone()).await {
-                        track_cats(img_src, true);
-                        image.restart();
-                    }
-                },
-                id: "like",
-                "like"
-            }
+            "dislike 😿"
+        },
+        button {
+            class: "hover:bg-violet-300 p-5",
+            onclick: move |_| async move {
+                let img_src = image.cloned().unwrap_or_default();
+                if let Ok(_) = backend::save_cat(img_src.clone()).await {
+                    track_cats(img_src, true);
+                    image.restart();
+                }
+            },
+            "like 😻"
         }
-
     }
 }
