@@ -1,5 +1,5 @@
 [package]
-name = "server_dog"
+name = "paws_and_preferences"
 version = "0.1.0"
 authors = ["Yap Jia Hong <yapjiahong-p@proton.me>"]
 edition = "2021"

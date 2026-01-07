@@ -2194,6 +2194,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "paws_and_preferences"
+version = "0.1.0"
+dependencies = [
+ "dioxus",
+ "serde",
+]
+
+[[package]]
 name = "percent-encoding"
 version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2697,14 +2705,6 @@ dependencies = [
  "form_urlencoded",
  "itoa",
  "ryu",
- "serde",
-]
-
-[[package]]
-name = "server_dog"
-version = "0.1.0"
-dependencies = [
- "dioxus",
  "serde",
 ]
 
