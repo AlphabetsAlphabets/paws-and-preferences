@@ -1,8 +1,6 @@
 use std::collections::HashMap;
 
-use dioxus::{logger::tracing, prelude::*};
-
-use crate::backend;
+use dioxus::{fullstack::reqwest, logger::tracing, prelude::*};
 
 static CATS_SEEN: GlobalSignal<u8> = Signal::global(|| 1);
 
@@ -11,9 +9,23 @@ struct CatHistory(HashMap<String, bool>);
 
 static CAT_HISTORY: GlobalSignal<CatHistory> = Signal::global(|| CatHistory(HashMap::new()));
 
+#[derive(serde::Deserialize, serde::Serialize)]
+struct CatApi {
+    url: String,
+}
+
+async fn get_cat() -> Result<String> {
+    let response = reqwest::get("https://cataas.com/cat?json=true")
+        .await
+        .unwrap();
+    let result = response.json::<CatApi>().await.unwrap();
+
+    Ok(result.url)
+}
+
 #[allow(non_snake_case)]
 pub fn CatView() -> Element {
-    let image = use_resource(|| async move { backend::get_cat().await.unwrap_or_default() });
+    let image = use_resource(|| async move { get_cat().await.unwrap_or_default() });
 
     if (*CATS_SEEN.resolve())() >= 5 {
         rsx! {
@@ -109,7 +121,7 @@ fn CatImage(image: Resource<String>) -> Element {
 fn LikeDislike(image: Resource<String>) -> Element {
     rsx! {
         button {
-            class: "mr-4 hover:bg-red-500 p-5",
+            class: "mr-5 hover:bg-red-500 p-5 text-4xl border border-solid",
             onclick: move |_| {
                 track_cats(image.cloned().unwrap_or_default(), false);
                 image.restart()
@@ -117,13 +129,11 @@ fn LikeDislike(image: Resource<String>) -> Element {
             "dislike 😿"
         },
         button {
-            class: "hover:bg-violet-300 p-5",
+            class: "ml-5 hover:bg-violet-300 p-5 text-4xl border border-solid",
             onclick: move |_| async move {
                 let img_src = image.cloned().unwrap_or_default();
-                if let Ok(_) = backend::save_cat(img_src.clone()).await {
-                    track_cats(img_src, true);
-                    image.restart();
-                }
+                track_cats(img_src, true);
+                image.restart();
             },
             "like 😻"
         }
