@@ -3,7 +3,7 @@
 [web.app]
 
 # HTML title tag content
-title = "server_dog"
+title = "paws and preferences"
 
 # include `assets` in web platform
 [web.resource]
