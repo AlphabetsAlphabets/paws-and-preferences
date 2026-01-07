@@ -106,10 +106,32 @@ fn track_cats(url: String, like: bool) {
 #[allow(non_snake_case)]
 #[component]
 fn CatImage(image: Resource<String>) -> Element {
+    let mut start_x = use_signal(|| 0.0);
     rsx! {
         div {
             img {
                 class: "w-[500px] h-[500px] object-contain",
+                ontouchstart: move |event| {
+                    if let Some(touch) = event.data.touches_changed().first() {
+                        start_x.set(touch.screen_coordinates().x);
+                    }
+                },
+                ontouchend: move |event| {
+                    if let Some(touch) = event.data.touches_changed().first() {
+                        let end_x = touch.screen_coordinates().x;
+                        let delta_x = end_x - start_x();
+                        let threshold = 50.0;
+
+                        if delta_x > threshold {
+                            let img_src = image.cloned().unwrap_or_default();
+                            track_cats(img_src, true);
+                            image.restart();
+                        } else if delta_x < -threshold {
+                            track_cats(image.cloned().unwrap_or_default(), false);
+                            image.restart()
+                        }
+                    }
+                },
                 src: image.cloned().unwrap_or_default()
             }
         }
