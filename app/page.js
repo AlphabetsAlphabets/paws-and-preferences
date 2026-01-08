@@ -11,8 +11,8 @@ export const LikeCats = createContext([]);
 export const DislikeCats = createContext([]);
 
 function Summary() {
-  const [likeCats, setLikeCats] = useContext(LikeCats);
-  const [dislikeCats, setDislikeCats] = useContext(DislikeCats);
+  const [likeCats, _setLikeCats] = useContext(LikeCats);
+  const [dislikeCats, _setDislikeCats] = useContext(DislikeCats);
 
   let likes = [];
 
