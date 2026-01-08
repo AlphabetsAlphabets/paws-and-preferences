@@ -29,8 +29,10 @@ export default function HomePage() {
     <DislikeCats.Provider value={dislikeCatsState}>
       <LikeCats.Provider value={likeCatsState}>
         <CatsSeenContext.Provider value={catsSeenState}>
-          <div>
+          <div className="flex items-center justify-center mb-5">
             <CatView image={image} />
+          </div>
+          <div className="flex items-center justify-center mb-5">
             <LikeDislike image={image} />
           </div>
         </CatsSeenContext.Provider>

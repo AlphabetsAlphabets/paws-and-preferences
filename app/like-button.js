@@ -20,8 +20,18 @@ export default function LikeDislike({ image }) {
 
   return (
     <div className="like-dislike">
-      <button onClick={() => handleClick(false)}>Dislike</button>
-      <button onClick={() => handleClick(true)}>Like ({catsSeen})</button>
+      <button
+        className="mr-5 hover:bg-red-500 p-5 text-4xl border border-solid"
+        onClick={() => handleClick(false)}
+      >
+        Dislike
+      </button>
+      <button
+        className="ml-5 hover:bg-violet-300 p-5 text-4xl border border-solid"
+        onClick={() => handleClick(true)}
+      >
+        Like
+      </button>
     </div>
   );
 }
