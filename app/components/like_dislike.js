@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { LikeCats, CatsSeenContext, DislikeCats } from "./page";
+import { LikeCats, CatsSeenContext, DislikeCats } from "../page";
 
 export default function LikeDislike({ image }) {
   const [catsSeen, setCatsSeen] = useContext(CatsSeenContext);
@@ -19,7 +19,7 @@ export default function LikeDislike({ image }) {
   }
 
   return (
-    <div className="like-dislike">
+    <div className="flex items-center justify-center mt-5">
       <button
         className="mr-5 hover:bg-red-500 p-5 text-4xl border border-solid"
         onClick={() => handleClick(false)}

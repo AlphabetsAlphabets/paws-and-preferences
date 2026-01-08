@@ -1,9 +1,9 @@
 "use client";
 
 import { useContext, useRef } from "react";
-import { LikeCats, CatsSeenContext, DislikeCats } from "./page";
+import { CatsSeenContext, DislikeCats, LikeCats } from "../page";
 
-export default function CatView({ image }) {
+export function CatImage({ image }) {
   const [catsSeen, setCatsSeen] = useContext(CatsSeenContext);
   const [likeCats, setLikeCats] = useContext(LikeCats);
   const [dislikeCats, setDislikeCats] = useContext(DislikeCats);
