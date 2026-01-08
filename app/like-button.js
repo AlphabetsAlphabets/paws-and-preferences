@@ -1,12 +1,12 @@
 "use client";
 
 import { useContext } from "react";
-import { LikeCats, CatsSeenContext } from "./page";
+import { LikeCats, CatsSeenContext, DislikeCats } from "./page";
 
 export default function LikeDislike({ image }) {
   const [catsSeen, setCatsSeen] = useContext(CatsSeenContext);
   const [likeCats, setLikeCats] = useContext(LikeCats);
-  const [dislikeCats, setDislikeCats] = useContext(LikeCats);
+  const [dislikeCats, setDislikeCats] = useContext(DislikeCats);
 
   function handleClick(like) {
     if (like) {
